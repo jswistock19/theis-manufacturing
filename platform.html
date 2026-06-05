@@ -1,303 +1,430 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Theis Tekton Platform — Advanced Materials & BlackBox AI | Theis Manufacturing</title>
-<meta name="description" content="Theis Tekton — 1,100+ proprietary formulations, BLT layered assembly architecture, BlackBox Manufacturing AI, and the reshoring rapid mold advantage.">
+<title>Theis Tekton Platform — The Science of Impossible Performance | Theis Manufacturing</title>
+<meta name="description" content="Theis Tekton is a proprietary polymer composite system with 1,100+ formulations engineered for strength, speed, and longevity across every industrial environment.">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><polygon points='16,2 30,9 30,23 16,30 2,23 2,9' fill='%23C0181E'/><text x='16' y='22' text-anchor='middle' fill='white' font-size='14' font-family='Arial Black'>T</text></svg>">
+<style>
+  /* ── SPLIT LAYOUT ─────────────────────────────────────────── */
+  .content-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .content-split.reverse { direction: rtl; }
+  .content-split.reverse > * { direction: ltr; }
+  .split-image {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+    height: 480px;
+  }
+  .split-image img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 6s ease;
+  }
+  .split-image:hover img { transform: scale(1.04); }
+
+  /* ── BLT STACK ───────────────────────────────────────────── */
+  .blt-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  /* ── DEPLOYMENT CARDS ────────────────────────────────────── */
+  .deploy-card {
+    background: var(--white);
+    border: 1px solid var(--gray-100);
+    border-radius: var(--radius-lg);
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  }
+  .deploy-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--red);
+  }
+  .deploy-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--red);
+  }
+  .deploy-num {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    color: var(--gray-100);
+    line-height: 1;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+  }
+  .deploy-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--navy);
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+  .deploy-text { font-size: .9rem; color: var(--gray-500); line-height: 1.65; }
+
+  /* ── BLACKBOX SECTION ────────────────────────────────────── */
+  .blackbox-feature {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    margin-bottom: 28px;
+  }
+  .blackbox-feature:last-child { margin-bottom: 0; }
+  .blackbox-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    background: rgba(11,30,61,.08);
+    border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+  }
+  .blackbox-feature h4 {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: var(--navy);
+    margin-bottom: 4px;
+    letter-spacing: .3px;
+  }
+  .blackbox-feature p { font-size: .875rem; color: var(--gray-500); line-height: 1.55; }
+
+  /* ── METRICS ON DARK ──────────────────────────────────────── */
+  .metrics-row.on-dark .metric-cell {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: var(--radius-md);
+  }
+  .metrics-row.on-dark { background: transparent; gap: 12px; }
+  .metrics-row.on-dark .metric-num { color: var(--white); }
+  .metrics-row.on-dark .metric-label { color: rgba(255,255,255,.6); }
+
+  /* ── FULL-BLEED IMAGE ─────────────────────────────────────── */
+  .image-section {
+    position: relative;
+    overflow: hidden;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+  }
+  .img-bg {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+  }
+  .img-overlay {
+    position: absolute; inset: 0;
+  }
+  .img-content {
+    position: relative; z-index: 2;
+    width: 100%;
+  }
+
+  @media (max-width: 1024px) {
+    .content-split,
+    .blt-wrap { grid-template-columns: 1fr; }
+    .content-split.reverse { direction: ltr; }
+    .split-image { height: 320px; }
+  }
+  @media (max-width: 768px) {
+    .blt-wrap { gap: 40px; }
+    .deploy-num { font-size: 3.5rem; }
+  }
+</style>
 </head>
 <body>
 
-<div class="page-transition">
-  <div style="text-align:center;">
-    <div class="loader-logo">THEIS TEKTON</div>
-    <div style="margin-top:8px;font-size:var(--text-xs);letter-spacing:0.18em;color:var(--red);text-transform:uppercase;font-weight:700;">The Platform</div>
+<!-- PAGE LOADER -->
+<div class="page-loader">
+  <div class="loader-inner">
+    <div class="loader-logo">THEIS <span>TEKTON</span></div>
+    <div style="font-size:.7rem;letter-spacing:3px;color:rgba(255,255,255,.55);text-transform:uppercase;margin-top:-8px;">The Platform</div>
+    <div class="loader-bar"></div>
   </div>
-  <div class="loader-bar"></div>
 </div>
 
-<div class="confidential-bar"><span>Confidential &nbsp;|&nbsp; Investor Business Plan &nbsp;|&nbsp; June 2026 &nbsp;|&nbsp; Theis Manufacturing Corp</span></div>
+<!-- CONFIDENTIAL BANNER -->
+<div class="conf-banner">
+  <strong>Customer Platform Overview</strong> &nbsp;|&nbsp; Theis Manufacturing Corp &nbsp;|&nbsp; Theis Tekton Technology &nbsp;|&nbsp; info@theismanufacturing.com
+</div>
 
-<nav class="nav">
+<!-- NAVIGATION -->
+<nav class="site-nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo" aria-label="Theis Manufacturing">
-      <div class="logo-mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-      <span>THEIS MFG</span>
+      <div class="logo-mark">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5" stroke="white" fill="none" stroke-width="1.5"/><path d="M2 12l10 5 10-5" stroke="white" fill="none" stroke-width="1.5"/></svg>
+      </div>
+      <span class="logo-name">THEIS <span>MFG</span></span>
     </a>
     <ul class="nav-links" role="list">
       <li><a href="index.html">Home</a></li>
-      <li><a href="platform.html">Platform</a></li>
-      <li><a href="divisions.html">12 Divisions</a></li>
-      <li><a href="investment.html">Investment</a></li>
+      <li><a href="platform.html" class="active">Platform</a></li>
+      <li><a href="divisions.html">Divisions</a></li>
+      <li><a href="capabilities.html">Capabilities</a></li>
       <li><a href="about.html">About</a></li>
-      <li class="nav-cta-wrap"><a href="contact.html" class="nav-cta">Get in Touch</a></li>
+      <li class="nav-cta-wrap"><a href="contact.html" class="nav-cta">Contact</a></li>
     </ul>
-    <button class="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <button class="nav-hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
-<div class="mobile-menu">
-  <a href="index.html">Home</a><a href="platform.html">Platform</a><a href="divisions.html">12 Divisions</a><a href="investment.html">Investment</a><a href="about.html">About</a><a href="contact.html">Get in Touch</a>
-</div>
 
-<!-- PAGE HERO -->
-<section style="min-height:60vh;display:flex;align-items:flex-end;position:relative;overflow:hidden;padding-top:88px;">
-  <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,10,10,0.5) 0%,rgba(10,10,10,0.8) 60%,var(--black) 100%),url('https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=1800&q=80') center/cover no-repeat;"></div>
-  <div class="hero-grid-overlay"></div>
-  <div class="container" style="position:relative;z-index:2;padding-bottom:var(--sp-16);">
-    <div class="hero-eyebrow" style="margin-bottom:var(--sp-5);">
-      <div class="hero-eyebrow-line"></div>
-      <span class="hero-eyebrow-text">The Foundation</span>
-    </div>
-    <h1 class="hero-title" style="font-size:clamp(3rem,7vw,7rem);">
-      <span class="hero-title-line">Theis</span>
-      <span class="hero-title-line accent">Tekton</span>
-      <span class="hero-title-line">Platform</span>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 1. HERO                                                    -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg" style="background-image: url('images/carbon_fiber_hero.png');"></div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Theis Tekton Technology</div>
+    <h1 class="hero-title fade-up">
+      THE SCIENCE OF<br><span class="accent">IMPOSSIBLE</span><br>PERFORMANCE
     </h1>
-    <p class="hero-subtitle" style="max-width:580px;margin-top:var(--sp-5);">
-      A proprietary family of 1,100+ advanced material systems. A coating. And far more than a coating. It is whatever the mission requires — engineered around the outcome, not the ingredient.
+    <p class="hero-sub fade-up d1">
+      Theis Tekton is a proprietary polymer composite system with 1,100+ formulations engineered for strength, speed, and longevity across every industrial environment.
     </p>
+    <div class="hero-actions fade-up d2">
+      <a href="divisions.html" class="btn btn-primary">See Divisions</a>
+      <a href="contact.html" class="btn btn-outline-white">Request Info</a>
+    </div>
+  </div>
+
+  <!-- Stats Bar -->
+  <div class="hero-stats">
+    <div class="hero-stats-inner">
+      <div class="stat-item">
+        <div class="stat-num"><span class="stat-accent" data-target="1100" data-suffix="+">1100+</span></div>
+        <div class="stat-label">Proprietary Formulations</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num"><span class="stat-accent">3–10s</span></div>
+        <div class="stat-label">Base Cure Time</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num"><span class="stat-accent">12</span></div>
+        <div class="stat-label">Industry Verticals</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num"><span class="stat-accent">100%</span></div>
+        <div class="stat-label">American Made</div>
+      </div>
+    </div>
   </div>
 </section>
 
-<div class="ticker-strip">
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 2. TICKER                                                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="ticker-wrap">
   <div class="ticker-inner">
-    <span class="ticker-item">1,100+ Formulations</span><span class="ticker-item">3–10 Second Cure</span><span class="ticker-item">100% Solids · Zero VOC</span><span class="ticker-item">PFAS-Free</span><span class="ticker-item">Zero Waste Production</span><span class="ticker-item">Spray · Pour · Cast · Inject</span><span class="ticker-item">Bonds to Any Substrate</span><span class="ticker-item">Fully Outcome-Engineered</span><span class="ticker-item">BlackBox Manufacturing AI</span><span class="ticker-item">Reshoring in Minutes</span><span class="ticker-item">1,100+ Formulations</span><span class="ticker-item">3–10 Second Cure</span><span class="ticker-item">100% Solids · Zero VOC</span><span class="ticker-item">PFAS-Free</span><span class="ticker-item">Zero Waste Production</span><span class="ticker-item">Spray · Pour · Cast · Inject</span><span class="ticker-item">Bonds to Any Substrate</span><span class="ticker-item">Fully Outcome-Engineered</span><span class="ticker-item">BlackBox Manufacturing AI</span><span class="ticker-item">Reshoring in Minutes</span>
+    <span class="ticker-item">1,100+ Proprietary Formulations</span>
+    <span class="ticker-item">3–10 Second Base Cure</span>
+    <span class="ticker-item">BLT Sandwich Architecture</span>
+    <span class="ticker-item">Zero VOC · Zero PFAS</span>
+    <span class="ticker-item">TT7200 Workhorse Formulation</span>
+    <span class="ticker-item">P11FRC Primer System</span>
+    <span class="ticker-item">12 Industry Verticals</span>
+    <span class="ticker-item">Military-Grade Durability</span>
+    <span class="ticker-item">100% American Manufacturing</span>
+    <span class="ticker-item">BlackBox AI Division Intelligence</span>
+    <span class="ticker-item">Licensed via HP Miller LLC</span>
+    <span class="ticker-item">1,100+ Proprietary Formulations</span>
+    <span class="ticker-item">3–10 Second Base Cure</span>
+    <span class="ticker-item">BLT Sandwich Architecture</span>
+    <span class="ticker-item">Zero VOC · Zero PFAS</span>
+    <span class="ticker-item">TT7200 Workhorse Formulation</span>
+    <span class="ticker-item">P11FRC Primer System</span>
+    <span class="ticker-item">12 Industry Verticals</span>
+    <span class="ticker-item">Military-Grade Durability</span>
+    <span class="ticker-item">100% American Manufacturing</span>
+    <span class="ticker-item">BlackBox AI Division Intelligence</span>
+    <span class="ticker-item">Licensed via HP Miller LLC</span>
   </div>
 </div>
 
-<!-- UNDERSTANDING THE PLATFORM -->
-<section class="section bg-black-2" id="tekton">
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 3. PLATFORM OVERVIEW                                       -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="section bg-white" id="tekton">
   <div class="container">
-    <div class="split">
-      <div class="reveal">
-        <div class="section-eyebrow" style="margin-bottom:var(--sp-5);">Material Capabilities</div>
-        <h2 class="section-title" style="margin-bottom:var(--sp-6);">Outcome-Driven<br><span class="text-red">Engineering</span></h2>
-        <p style="color:var(--white-muted);line-height:1.7;margin-bottom:var(--sp-6);">
-          Theis Tekton is outcome-driven engineering: the desired objective defines success — fire performance, R-value, impact resistance, ballistic protection, corrosion barrier, hydrocarbon tolerance, UV stability, weight, flexibility, lifespan, manufacturability, or regulatory pathway. Theis selects or formulates the material system and layered architecture required to achieve it.
+    <div class="content-split">
+      <!-- Left: Content -->
+      <div class="fade-up">
+        <div class="section-label">What Is Theis Tekton</div>
+        <h2 class="section-title">A Complete<br><span class="accent">Composite</span> System</h2>
+
+        <p style="color:var(--gray-700);line-height:1.75;margin-bottom:24px;font-size:.95rem;">
+          Theis Tekton is not a single product — it is a full system of over 1,100 proprietary polymer composite formulations engineered under one platform. Every formulation is designed for a specific outcome, whether that is structural reinforcement, fire resistance, ballistic protection, chemical containment, or environmental sealing. The breadth of the library is what makes Theis capable of serving twelve distinct industrial verticals from a single manufacturing foundation.
         </p>
-        <div class="grid-auto-sm" style="gap:var(--sp-4);">
-          <div style="padding:var(--sp-4);background:var(--black-4);border-radius:var(--r-md);border:1px solid var(--border);">
-            <div style="font-size:var(--text-xs);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:var(--sp-2);">Form Factors</div>
-            <p style="font-size:var(--text-xs);color:var(--white-muted);">Coating · Foam · Molded Part · Cast Part · Liner · Film · Composite · Adhesive · Insulation · Armor Layer · Structural Skin</p>
-          </div>
-          <div style="padding:var(--sp-4);background:var(--black-4);border-radius:var(--r-md);border:1px solid var(--border);">
-            <div style="font-size:var(--text-xs);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:var(--sp-2);">Performance</div>
-            <p style="font-size:var(--text-xs);color:var(--white-muted);">Water · Fire · Corrosion · Abrasion · Chemicals · UV · Impact · Blast · Moisture · Environmental Resistance</p>
-          </div>
-          <div style="padding:var(--sp-4);background:var(--black-4);border-radius:var(--r-md);border:1px solid var(--border);">
-            <div style="font-size:var(--text-xs);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:var(--sp-2);">Substrate Compatibility</div>
-            <p style="font-size:var(--text-xs);color:var(--white-muted);">Metal · Wood · Concrete · Composites · Poles · Pipes · Panels · Vessels · Vehicles · Molds</p>
-          </div>
-          <div style="padding:var(--sp-4);background:var(--black-4);border-radius:var(--r-md);border:1px solid var(--border);">
-            <div style="font-size:var(--text-xs);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:var(--sp-2);">Application Methods</div>
-            <p style="font-size:var(--text-xs);color:var(--white-muted);">Spray · Roll · Pour · Cast · Inject — On-site or In-plant · Vertically · Horizontally · In Cold Temperatures</p>
-          </div>
-        </div>
-      </div>
-      <div class="reveal reveal-delay-2">
-        <div style="background:var(--black-3);border:1px solid var(--border);border-radius:var(--r-xl);padding:var(--sp-8);">
-          <div style="margin-bottom:var(--sp-6);">
-            <div style="font-family:var(--font-display);font-size:var(--text-2xl);letter-spacing:0.04em;margin-bottom:var(--sp-2);">The Formulation Library</div>
-            <p style="font-size:var(--text-sm);color:var(--white-muted);">Every formulation is engineered around a specific outcome — no shelf-product compromise.</p>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:var(--sp-3);">
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--sp-3);background:var(--black-4);border-radius:var(--r-md);">
-              <span style="font-size:var(--text-sm);font-weight:600;">TT7200</span>
-              <span class="tag">Workhorse Formulation</span>
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--sp-3);background:var(--black-4);border-radius:var(--r-md);">
-              <span style="font-size:var(--text-sm);font-weight:600;">P11FRC</span>
-              <span class="tag tag-dark">Primer / Bond Layer</span>
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--sp-3);background:var(--black-4);border-radius:var(--r-md);">
-              <span style="font-size:var(--text-sm);font-weight:600;">Ballistic Series</span>
-              <span class="tag tag-dark">Defense / Armor</span>
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--sp-3);background:var(--black-4);border-radius:var(--r-md);">
-              <span style="font-size:var(--text-sm);font-weight:600;">Marine Series</span>
-              <span class="tag tag-dark">Maritime / Hull</span>
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--sp-3);background:var(--black-4);border-radius:var(--r-md);">
-              <span style="font-size:var(--text-sm);font-weight:600;">Chem-Resist Series</span>
-              <span class="tag tag-dark">Hydrocarbon / Industrial</span>
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--sp-3);background:var(--red-dim);border:1px solid rgba(192,24,30,0.2);border-radius:var(--r-md);">
-              <span style="font-size:var(--text-sm);font-weight:600;color:var(--white);">+ 1,095 More Formulations</span>
-              <span style="font-size:var(--text-xs);color:var(--red);font-weight:700;">& Growing</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- THREE WAYS TO DEPLOY -->
-<section class="section bg-black">
-  <div class="container">
-    <div style="text-align:center;max-width:680px;margin:0 auto var(--sp-12);" class="reveal">
-      <div class="section-eyebrow" style="justify-content:center;margin-bottom:var(--sp-5);">Deployment Architecture</div>
-      <h2 class="section-title" style="margin-bottom:var(--sp-5);">Three Ways to Deploy<br><span class="text-red">Theis Tekton</span></h2>
-      <p style="color:var(--white-muted);font-size:var(--text-base);line-height:1.7;">Theis Tekton is deployed in whatever configuration the outcome requires — as a coating, a standalone product, or a layered assembly engineered to achieve what no single material could deliver alone.</p>
-    </div>
-    <div class="grid-3 reveal reveal-delay-1">
-      <div style="padding:var(--sp-8);background:var(--black-3);border:1px solid var(--border);border-radius:var(--r-xl);position:relative;overflow:hidden;">
-        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);"></div>
-        <div style="font-family:var(--font-display);font-size:clamp(4rem,8vw,7rem);color:rgba(192,24,30,0.12);line-height:1;margin-bottom:var(--sp-4);letter-spacing:0.04em;">01</div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-2xl);letter-spacing:0.04em;margin-bottom:var(--sp-4);">As a Coating</h3>
-        <p style="font-size:var(--text-sm);color:var(--white-muted);line-height:1.7;margin-bottom:var(--sp-5);">Applied to an existing substrate — pole, pipe, vehicle, tank, floor, hull, concrete, metal, composite — to protect, extend asset life, enhance performance, or restore function.</p>
-        <div style="display:flex;flex-wrap:wrap;gap:var(--sp-2);">
-          <span class="tag tag-dark">Spray</span>
-          <span class="tag tag-dark">Roll</span>
-          <span class="tag tag-dark">Pour</span>
-          <span class="tag tag-dark">Inject</span>
-          <span class="tag tag-dark">On-Site or In-Plant</span>
-        </div>
-      </div>
-      <div style="padding:var(--sp-8);background:var(--black-3);border:1px solid var(--border);border-radius:var(--r-xl);position:relative;overflow:hidden;">
-        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);"></div>
-        <div style="font-family:var(--font-display);font-size:clamp(4rem,8vw,7rem);color:rgba(192,24,30,0.12);line-height:1;margin-bottom:var(--sp-4);letter-spacing:0.04em;">02</div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-2xl);letter-spacing:0.04em;margin-bottom:var(--sp-4);">As a Standalone Product</h3>
-        <p style="font-size:var(--text-sm);color:var(--white-muted);line-height:1.7;margin-bottom:var(--sp-5);">A single formulation used to produce an entire product — lenses, mugs, shields, panels, gaskets, tool bodies, or structural components — without a secondary substrate.</p>
-        <div style="display:flex;flex-wrap:wrap;gap:var(--sp-2);">
-          <span class="tag tag-dark">Lenses</span>
-          <span class="tag tag-dark">Shields</span>
-          <span class="tag tag-dark">Panels</span>
-          <span class="tag tag-dark">Structural Components</span>
-        </div>
-      </div>
-      <div style="padding:var(--sp-8);background:var(--black-3);border:1px solid var(--border);border-radius:var(--r-xl);position:relative;overflow:hidden;">
-        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);"></div>
-        <div style="font-family:var(--font-display);font-size:clamp(4rem,8vw,7rem);color:rgba(192,24,30,0.12);line-height:1;margin-bottom:var(--sp-4);letter-spacing:0.04em;">03</div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-2xl);letter-spacing:0.04em;margin-bottom:var(--sp-4);">As a Layered Assembly</h3>
-        <p style="font-size:var(--text-sm);color:var(--white-muted);line-height:1.7;margin-bottom:var(--sp-5);">Multiple formulations in engineered layers — each selected to contribute a specific performance property — together achieving an outcome no single material could deliver alone.</p>
-        <div style="display:flex;flex-wrap:wrap;gap:var(--sp-2);">
-          <span class="tag tag-dark">BLT Architecture</span>
-          <span class="tag tag-dark">Multi-Performance</span>
-          <span class="tag tag-dark">Custom Engineered</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BLT ARCHITECTURE -->
-<section class="section bg-black-2" id="blt">
-  <div class="container">
-    <div class="reveal" style="text-align:center;max-width:680px;margin:0 auto var(--sp-12);">
-      <div class="section-eyebrow" style="justify-content:center;margin-bottom:var(--sp-5);">The BLT Sandwich</div>
-      <h2 class="section-title" style="margin-bottom:var(--sp-5);">Layered Assembly<br><span class="text-red">Architecture</span></h2>
-      <p style="color:var(--white-muted);line-height:1.7;">Every product is a BLT sandwich — substrate → primer → core → functional → topcoat. Each layer is a Theis Tekton formulation engineered to deliver a specific performance property. Together, they achieve what no single material could.</p>
-    </div>
-    <div class="reveal reveal-delay-1" style="max-width:720px;margin:0 auto;">
-      <!-- BLT Visual Stack -->
-      <div style="display:flex;flex-direction:column;gap:var(--sp-2);">
-        <div style="background:var(--red);padding:var(--sp-5) var(--sp-8);border-radius:var(--r-lg) var(--r-lg) 0 0;display:flex;align-items:center;justify-content:space-between;">
-          <div>
-            <div style="font-family:var(--font-display);font-size:var(--text-lg);letter-spacing:0.06em;color:white;">TOPCOAT</div>
-            <div style="font-size:var(--text-xs);color:rgba(255,255,255,0.8);margin-top:2px;">UV Protection · Environmental Seal · Color Stability</div>
-          </div>
-          <span style="font-size:var(--text-xs);font-weight:700;letter-spacing:0.12em;color:rgba(255,255,255,0.7);text-transform:uppercase;">Layer 5</span>
-        </div>
-        <div style="background:var(--black-5);border:1px solid var(--border);padding:var(--sp-5) var(--sp-8);display:flex;align-items:center;justify-content:space-between;">
-          <div>
-            <div style="font-family:var(--font-display);font-size:var(--text-lg);letter-spacing:0.06em;">FUNCTIONAL LAYER</div>
-            <div style="font-size:var(--text-xs);color:var(--white-muted);margin-top:2px;">Fire Resistance · Ballistic Protection · Corrosion Barrier · Blast Attenuation</div>
-          </div>
-          <span style="font-size:var(--text-xs);font-weight:700;letter-spacing:0.12em;color:var(--white-faint);text-transform:uppercase;">Layer 4</span>
-        </div>
-        <div style="background:var(--black-4);border:2px solid rgba(192,24,30,0.3);padding:var(--sp-6) var(--sp-8);display:flex;align-items:center;justify-content:space-between;">
-          <div>
-            <div style="font-family:var(--font-display);font-size:var(--text-xl);letter-spacing:0.06em;color:var(--white);">CORE — TT7200</div>
-            <div style="font-size:var(--text-xs);color:var(--white-muted);margin-top:2px;">Workhorse Formulation · Structural Integrity · Thermal Performance · Impact Resistance</div>
-          </div>
-          <span style="font-size:var(--text-xs);font-weight:700;letter-spacing:0.12em;color:var(--red);text-transform:uppercase;">Layer 3 — Core</span>
-        </div>
-        <div style="background:var(--black-5);border:1px solid var(--border);padding:var(--sp-5) var(--sp-8);display:flex;align-items:center;justify-content:space-between;">
-          <div>
-            <div style="font-family:var(--font-display);font-size:var(--text-lg);letter-spacing:0.06em;">PRIMER — P11FRC</div>
-            <div style="font-size:var(--text-xs);color:var(--white-muted);margin-top:2px;">Bond Layer · Adhesion Optimization · Surface Prep Replacement</div>
-          </div>
-          <span style="font-size:var(--text-xs);font-weight:700;letter-spacing:0.12em;color:var(--white-faint);text-transform:uppercase;">Layer 2</span>
-        </div>
-        <div style="background:var(--black-3);border:1px solid var(--border);padding:var(--sp-5) var(--sp-8);border-radius:0 0 var(--r-lg) var(--r-lg);display:flex;align-items:center;justify-content:space-between;">
-          <div>
-            <div style="font-family:var(--font-display);font-size:var(--text-lg);letter-spacing:0.06em;color:var(--white-muted);">SUBSTRATE</div>
-            <div style="font-size:var(--text-xs);color:var(--white-faint);margin-top:2px;">Metal · Wood · Concrete · Composite · Pole · Pipe · Vessel · Vehicle</div>
-          </div>
-          <span style="font-size:var(--text-xs);font-weight:700;letter-spacing:0.12em;color:var(--white-faint);text-transform:uppercase;">Layer 1</span>
-        </div>
-      </div>
-      <div style="text-align:center;margin-top:var(--sp-6);font-size:var(--text-sm);color:var(--white-muted);">Every layer is a Theis Tekton formulation. Every layer is engineered. Every assembly is custom-designed for the mission.</div>
-    </div>
-  </div>
-</section>
-
-<!-- MANUFACTURING ADVANTAGES -->
-<section class="section bg-black" id="manufacturing">
-  <div class="container">
-    <div style="text-align:center;max-width:680px;margin:0 auto var(--sp-12);" class="reveal">
-      <div class="section-eyebrow" style="justify-content:center;margin-bottom:var(--sp-5);">Production Edge</div>
-      <h2 class="section-title" style="margin-bottom:var(--sp-5);">Manufacturing<br><span class="text-red">Advantages</span></h2>
-    </div>
-    <div class="grid-3 reveal reveal-delay-1">
-      <div class="card">
-        <div style="font-family:var(--font-display);font-size:var(--text-3xl);color:var(--red);letter-spacing:0.04em;margin-bottom:var(--sp-3);">3–10s</div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-xl);letter-spacing:0.04em;margin-bottom:var(--sp-3);">Base Cure Time</h3>
-        <p style="font-size:var(--text-sm);color:var(--white-muted);line-height:1.7;">Enables rapid deployment, fast-cycle molds, and high-throughput production. Fully adjustable cure rate — can be slowed for open-mold, lamination, and tooling methods.</p>
-      </div>
-      <div class="card">
-        <div style="font-family:var(--font-display);font-size:var(--text-3xl);color:var(--red);letter-spacing:0.04em;margin-bottom:var(--sp-3);">0%</div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-xl);letter-spacing:0.04em;margin-bottom:var(--sp-3);">Production Waste</h3>
-        <p style="font-size:var(--text-sm);color:var(--white-muted);line-height:1.7;">All material utilized — any offcut or residual converts into usable building material, not landfill. Zero waste by design.</p>
-      </div>
-      <div class="card">
-        <div style="font-family:var(--font-display);font-size:var(--text-3xl);color:var(--red);letter-spacing:0.04em;margin-bottom:var(--sp-3);">JIT</div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-xl);letter-spacing:0.04em;margin-bottom:var(--sp-3);">Just-in-Time Production</h3>
-        <p style="font-size:var(--text-sm);color:var(--white-muted);line-height:1.7;">Significantly reduces lead times and raw material inventory requirements. Multiple application methods: spray, pour, cast, or inject — on-site or in-plant.</p>
-      </div>
-      <div class="card">
-        <div style="font-family:var(--font-display);font-size:var(--text-3xl);color:var(--red);letter-spacing:0.04em;margin-bottom:var(--sp-3);">1M+</div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-xl);letter-spacing:0.04em;margin-bottom:var(--sp-3);">Raw Material Access</h3>
-        <p style="font-size:var(--text-sm);color:var(--white-muted);line-height:1.7)">&gt;1M gallons per month raw material access per management — no known supply bottleneck. Equipment value: $50M–$70M estimated, providers can scale with demand.</p>
-      </div>
-      <div class="card">
-        <div style="font-family:var(--font-display);font-size:var(--text-3xl);color:var(--red);letter-spacing:0.04em;margin-bottom:var(--sp-3);">45%</div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-xl);letter-spacing:0.04em;margin-bottom:var(--sp-3);">Target Gross Margin</h3>
-        <p style="font-size:var(--text-sm);color:var(--white-muted);line-height:1.7;">Manufacturing gross margin target. Main plant first — centralized quality, trade-secret control, team density at one primary facility before regional expansion.</p>
-      </div>
-      <div class="card">
-        <div style="font-family:var(--font-display);font-size:var(--text-3xl);color:var(--red);letter-spacing:0.04em;margin-bottom:var(--sp-3);">∞</div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-xl);letter-spacing:0.04em;margin-bottom:var(--sp-3);">Prototype Speed</h3>
-        <p style="font-size:var(--text-sm);color:var(--white-muted);line-height:1.7;">Faster prototyping and tooling — compresses path from concept to revenue versus legacy material systems. Spray onto any existing part to create an immediate production-quality mold.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- RESHORING ADVANTAGE -->
-<section class="section bg-black-2" id="reshoring">
-  <div class="container">
-    <div class="split">
-      <div class="reveal">
-        <div class="section-eyebrow" style="margin-bottom:var(--sp-5);">The American Manufacturing Re-Enabler</div>
-        <h2 class="section-title" style="margin-bottom:var(--sp-6);">Reshoring &amp;<br><span class="text-red">Rapid Mold Advantage</span></h2>
-        <p style="color:var(--white-muted);line-height:1.7;margin-bottom:var(--sp-6);">
-          Countless American companies want to bring manufacturing home, but their production tooling is overseas. With Theis Tekton, a company can bring any existing part or prototype to the Theis facility. Within minutes, Theis sprays a production-grade mold from that part — at a fraction of the overseas cost, with no months-long lead time, and no compromise on precision.
+        <p style="color:var(--gray-700);line-height:1.75;margin-bottom:24px;font-size:.95rem;">
+          The workhorse formulation is <strong>TT7200</strong> — a high-adhesion structural composite with a 3–10 second cure time and military-grade durability that bonds to concrete, steel, wood, and FRP. <strong>P11FRC</strong> is the primer system that bonds to virtually any substrate surface, providing the adhesion foundation that the rest of the BLT stack builds upon. Together, these two formulations underpin the majority of Theis applications across all divisions.
         </p>
-        <div style="background:var(--black-4);border-left:4px solid var(--red);padding:var(--sp-5) var(--sp-6);border-radius:0 var(--r-md) var(--r-md) 0;margin-bottom:var(--sp-6);">
-          <p style="font-size:var(--text-base);color:var(--white);line-height:1.6;">"What was previously an insurmountable barrier to reshoring becomes a single-day event. American companies re-establish production capacity in the United States, practically, affordably, and immediately."</p>
+        <p style="color:var(--gray-700);line-height:1.75;margin-bottom:36px;font-size:.95rem;">
+          Every formulation is licensed through <strong>HP Miller LLC</strong> and manufactured in the USA. The platform deploys across 12 industry verticals with division-specific variants for ballistic, marine, chemical, and environmental applications — all sharing the same core material science, manufacturing logic, and quality system.
+        </p>
+
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="feature-body">
+              <h4>1,100+ Active Formulations</h4>
+              <p>A complete library — each formulation engineered to solve a specific industrial problem, not a general-purpose compromise.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <div class="feature-body">
+              <h4>3–10 Second Base Cure</h4>
+              <p>Rapid deployment and fast-cycle production. Fully adjustable cure rate for open-mold, lamination, and tooling methods.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="feature-body">
+              <h4>IP Licensed via HP Miller LLC</h4>
+              <p>All formulations are protected trade secrets, licensed through HP Miller LLC and applied by certified Theis crews or licensed applicators.</p>
+            </div>
+          </div>
         </div>
-        <a href="contact.html" class="btn btn-primary">Bring Your Part to Theis</a>
       </div>
-      <div class="reveal reveal-delay-2">
-        <div style="background:url('https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=800&q=80') center/cover;border-radius:var(--r-xl);height:420px;position:relative;overflow:hidden;">
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,0.9) 0%,transparent 60%);"></div>
-          <div style="position:absolute;bottom:var(--sp-6);left:var(--sp-6);right:var(--sp-6);">
-            <div style="font-family:var(--font-display);font-size:var(--text-2xl);letter-spacing:0.04em;">MINUTES.</div>
-            <div style="font-size:var(--text-sm);color:var(--white-muted);margin-top:var(--sp-1);">From overseas tooling problem to American production-ready mold.</div>
+
+      <!-- Right: Image -->
+      <div class="slide-right">
+        <div class="split-image">
+          <img src="images/blackbox_ai.png" alt="Theis Tekton composite technology in action" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 4. BLT SANDWICH ARCHITECTURE                               -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="section bg-offwhite" id="blt">
+  <div class="container">
+    <div class="section-header" style="margin-bottom:56px;">
+      <div class="section-label">Application System</div>
+      <h2 class="section-title">The BLT<br><span class="accent">Stack</span></h2>
+      <p class="section-subtitle">Every Theis application follows the same five-layer BLT sandwich principle — ensuring maximum adhesion, durability, and performance.</p>
+    </div>
+
+    <div class="blt-wrap fade-up">
+      <!-- Left: BLT Visual Stack -->
+      <div>
+        <div class="blt-stack">
+          <!-- Layer 5 (top) -->
+          <div class="blt-layer blt-layer-1">
+            <div class="blt-code">LAYER 5</div>
+            <div class="blt-desc">
+              <h5>Topcoat / Protective Finish</h5>
+              <p>UV, chemical, and abrasion resistance. Final barrier.</p>
+            </div>
+          </div>
+          <!-- Layer 4 -->
+          <div class="blt-layer blt-layer-2">
+            <div class="blt-code">LAYER 4</div>
+            <div class="blt-desc">
+              <h5>Functional Layer</h5>
+              <p>Division-specific: ballistic, marine, chemical, thermal.</p>
+            </div>
+          </div>
+          <!-- Layer 3 — Core (red highlight) -->
+          <div class="blt-layer blt-layer-3">
+            <div class="blt-code">LAYER 3</div>
+            <div class="blt-desc">
+              <h5>Structural Core — TT7200</h5>
+              <p>Primary strength layer. 3–10 second cure. Military-grade.</p>
+            </div>
+          </div>
+          <!-- Layer 2 -->
+          <div class="blt-layer blt-layer-4">
+            <div class="blt-code">LAYER 2</div>
+            <div class="blt-desc">
+              <h5>Primer — P11FRC</h5>
+              <p>Maximum adhesion to any substrate surface.</p>
+            </div>
+          </div>
+          <!-- Layer 1 (substrate) -->
+          <div class="blt-layer blt-layer-5">
+            <div class="blt-code">LAYER 1</div>
+            <div class="blt-desc">
+              <h5>Substrate Preparation</h5>
+              <p>Surface profiling and contamination removal.</p>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top:16px;font-size:.75rem;color:var(--gray-500);text-align:center;letter-spacing:.5px;">Every layer is a Theis Tekton formulation. Every assembly is custom-engineered.</p>
+      </div>
+
+      <!-- Right: Feature explanations -->
+      <div>
+        <h3 style="font-family:var(--font-display);font-size:1.6rem;color:var(--navy);letter-spacing:.3px;margin-bottom:32px;">How Each Layer Works</h3>
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-icon" style="background:var(--navy);">
+              <span style="color:white;font-weight:700;font-size:.75rem;">L5</span>
+            </div>
+            <div class="feature-body">
+              <h4>Topcoat — The Outer Shield</h4>
+              <p>The final coat blocks UV degradation, chemical ingress, and mechanical abrasion. Color-stable and long-life. Customized per division and environment.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon" style="background:var(--navy-light);">
+              <span style="color:white;font-weight:700;font-size:.75rem;">L4</span>
+            </div>
+            <div class="feature-body">
+              <h4>Functional Layer — Division-Specific</h4>
+              <p>This layer carries the specialized performance for each application: ballistic rated for Alviz Defense, salt-resistant for marine, heat-tolerant for energy, or fire-resistant for construction.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <span style="color:white;font-weight:700;font-size:.75rem;">L3</span>
+            </div>
+            <div class="feature-body">
+              <h4>TT7200 Structural Core — The Workhorse</h4>
+              <p>The primary strength layer. TT7200 cures in 3–10 seconds, delivers military-grade structural integrity, and bonds permanently to virtually any substrate. Used in 8 of 12 divisions.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon" style="background:var(--red-dark);">
+              <span style="color:white;font-weight:700;font-size:.75rem;">L2</span>
+            </div>
+            <div class="feature-body">
+              <h4>P11FRC Primer — The Bond Guarantee</h4>
+              <p>High-adhesion primer that creates a chemically compatible interface with virtually any substrate. No P11FRC — no guarantee. This layer is not optional.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon" style="background:var(--gray-900);">
+              <span style="color:white;font-weight:700;font-size:.75rem;">L1</span>
+            </div>
+            <div class="feature-body">
+              <h4>Substrate Preparation — The Foundation</h4>
+              <p>Surface profiling and contamination removal. Clean, profiled substrate is the prerequisite for every application. Theis crews handle this on-site before any material touches the surface.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -305,230 +432,332 @@
   </div>
 </section>
 
-<!-- ENVIRONMENTAL PROFILE -->
-<section class="section bg-black" id="environmental">
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 5. FORMULATIONS                                            -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="section bg-white" id="formulations">
   <div class="container">
-    <div style="text-align:center;max-width:680px;margin:0 auto var(--sp-12);" class="reveal">
-      <div class="section-eyebrow" style="justify-content:center;margin-bottom:var(--sp-5);">Clean Chemistry</div>
-      <h2 class="section-title" style="margin-bottom:var(--sp-5);">Environmental<br><span class="text-red">Profile</span></h2>
-      <p style="color:var(--white-muted);line-height:1.7;">Theis Tekton eliminates the toxic legacy chemistries that have defined industrial coatings for decades — without compromising performance.</p>
+    <div class="section-header centered fade-up">
+      <div class="section-label">Active Formulations</div>
+      <h2 class="section-title">1,100+ <span class="accent">Proprietary</span> Formulations</h2>
+      <p class="section-subtitle">The Theis Tekton library is the platform. Each formulation is engineered around a specific industrial outcome — not a shelf product or general-purpose material.</p>
     </div>
-    <div class="grid-3 reveal reveal-delay-1">
-      <div style="text-align:center;padding:var(--sp-8);background:var(--black-3);border:1px solid var(--border);border-radius:var(--r-lg);">
-        <div style="font-family:var(--font-display);font-size:var(--text-3xl);color:var(--red);margin-bottom:var(--sp-4);">100%</div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-xl);letter-spacing:0.04em;margin-bottom:var(--sp-3);">Zero VOC Solids</h3>
-        <p style="font-size:var(--text-sm);color:var(--white-muted);line-height:1.7;">No solvent carrier — nothing evaporates, nothing off-gasses, nothing left behind in the environment. 100% solids formulation.</p>
+
+    <div class="cards-grid cols-4 fade-up d1">
+
+      <!-- TT7200 -->
+      <div class="card">
+        <div class="card-body">
+          <div class="card-tag">Core Formulation</div>
+          <div class="card-title">TT7200 Workhorse</div>
+          <p class="card-text">The primary structural composite. 3–10 second cure time. Bonds to concrete, steel, wood, and FRP with military-grade durability. The backbone formulation used across 8 of 12 Theis divisions.</p>
+          <div class="card-meta">
+            <span class="card-tam">TT7200</span>
+            <span class="card-status ready">Core System</span>
+          </div>
+        </div>
       </div>
-      <div style="text-align:center;padding:var(--sp-8);background:var(--black-3);border:1px solid var(--border);border-radius:var(--r-lg);">
-        <div style="font-family:var(--font-display);font-size:var(--text-3xl);color:var(--red);margin-bottom:var(--sp-4);">0</div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-xl);letter-spacing:0.04em;margin-bottom:var(--sp-3);">PFAS Compounds</h3>
-        <p style="font-size:var(--text-sm);color:var(--white-muted);line-height:1.7;">Designed without persistent fluorinated compounds that have become a regulatory and public health liability globally. PFAS-free formulation.</p>
+
+      <!-- P11FRC -->
+      <div class="card">
+        <div class="card-body">
+          <div class="card-tag">Primer System</div>
+          <div class="card-title">P11FRC Primer</div>
+          <p class="card-text">High-adhesion primer system engineered to bond to virtually any substrate surface — metal, concrete, wood, composite, or existing coatings. Required first coat for all BLT applications.</p>
+          <div class="card-meta">
+            <span class="card-tam">P11FRC</span>
+            <span class="card-status ready">Required Layer</span>
+          </div>
+        </div>
       </div>
-      <div style="text-align:center;padding:var(--sp-8);background:var(--black-3);border:1px solid var(--border);border-radius:var(--r-lg);">
-        <div style="font-family:var(--font-display);font-size:var(--text-3xl);color:var(--red);margin-bottom:var(--sp-4);">0%</div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-xl);letter-spacing:0.04em;margin-bottom:var(--sp-3);">Production Waste</h3>
-        <p style="font-size:var(--text-sm);color:var(--white-muted);line-height:1.7;">Every manufacturing residual converts into usable building material — not landfill. Does not support bacterial growth. Non-leaching, non-degrading.</p>
+
+      <!-- Ballistic Series -->
+      <div class="card">
+        <div class="card-body">
+          <div class="card-tag">Defense Series</div>
+          <div class="card-title">Ballistic Series</div>
+          <p class="card-text">Formulated specifically for Alviz Defense applications. Rated for NIJ and military vehicle protection standards. Deployed on up-armored vehicles, body armor, and blast attenuation panels.</p>
+          <div class="card-meta">
+            <span class="card-tam">ALVIZ</span>
+            <span class="card-status">NIJ Rated</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Marine Series -->
+      <div class="card">
+        <div class="card-body">
+          <div class="card-tag">Marine Series</div>
+          <div class="card-title">Marine Series</div>
+          <p class="card-text">Salt-resistant, anti-corrosion formulations engineered for hull, dock, and offshore applications. Designed to outperform legacy marine epoxies in harsh saltwater and UV environments.</p>
+          <div class="card-meta">
+            <span class="card-tam">MARINE</span>
+            <span class="card-status">Anti-Corrosion</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;margin-top:40px;" class="fade-up d2">
+      <p style="font-size:.875rem;color:var(--gray-500);margin-bottom:20px;">These are four formulations from a library of 1,100+. Every division has division-specific variants.</p>
+      <a href="contact.html" class="btn btn-outline-navy">Request Full Spec Sheet</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 6. PERFORMANCE SPECS — NAVY BACKGROUND                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="section bg-navy" id="specs">
+  <div class="container">
+    <div class="section-header centered fade-up">
+      <div class="section-label" style="color:rgba(255,255,255,.55);justify-content:center;">
+        <span>By The Numbers</span>
+      </div>
+      <h2 class="section-title on-dark">Performance<br><span class="accent">Specifications</span></h2>
+    </div>
+
+    <div class="metrics-row on-dark fade-up d1">
+      <div class="metric-cell">
+        <div class="metric-num"><span class="accent" data-target="1100" data-suffix="+">1100+</span></div>
+        <div class="metric-label">Active Formulations</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-num" style="color:white;">3–10s</div>
+        <div class="metric-label">Base Cure Time</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-num"><span class="accent" data-target="5">5</span></div>
+        <div class="metric-label">BLT Stack Layers</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-num"><span class="accent" data-target="12">12</span></div>
+        <div class="metric-label">Industry Verticals</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-num" style="color:white;">$50–70M</div>
+        <div class="metric-label">Equipment Value</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-num" style="color:white;">&gt;1M gal</div>
+        <div class="metric-label">Monthly Raw Material</div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:48px;" class="fade-up d2">
+      <p style="font-size:.875rem;color:rgba(255,255,255,.55);max-width:560px;margin:0 auto 24px;">
+        Every number above is backed by operational capability, not projection. Theis Tekton is production-ready today.
+      </p>
+      <a href="contact.html" class="btn btn-outline-white">Talk to Our Engineering Team</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 7. THREE DEPLOYMENT MODES                                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="section bg-gray" id="deployment">
+  <div class="container">
+    <div class="section-header centered fade-up">
+      <div class="section-label">How We Deploy</div>
+      <h2 class="section-title">Three Ways to<br><span class="accent">Work</span> With Us</h2>
+      <p class="section-subtitle">Theis Tekton reaches your project through whichever deployment path fits your application, scale, and timeline.</p>
+    </div>
+
+    <div class="cards-grid cols-3 fade-up d1">
+
+      <div class="deploy-card">
+        <div class="deploy-num">01</div>
+        <div class="deploy-title">Direct Application</div>
+        <p class="deploy-text">Theis field crews apply composite systems directly on-site. Ideal for infrastructure, construction, and large-scale industrial projects where precision application and quality control are non-negotiable. Our crews own the process end to end — substrate prep through topcoat.</p>
+      </div>
+
+      <div class="deploy-card">
+        <div class="deploy-num">02</div>
+        <div class="deploy-title">Licensed Applicators <span style="display:block;font-family:var(--font-body);font-size:.7rem;font-weight:600;letter-spacing:1px;color:var(--gray-500);text-transform:uppercase;margin-top:4px;">via Parresia Corp</span></div>
+        <p class="deploy-text">Certified third-party applicators trained and licensed by Theis through Parresia Corp. Extends national geographic reach without compromising material quality or application standards. Every licensed applicator is trained to Theis spec — not a third-party standard.</p>
+      </div>
+
+      <div class="deploy-card">
+        <div class="deploy-num">03</div>
+        <div class="deploy-title">Manufactured Product</div>
+        <p class="deploy-text">Pre-fabricated composite components produced in the Theis facility. Ready to install upon delivery. Used for hyperbaric chambers, containment liners, specialty panels, and custom-engineered components where field application is not optimal.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 8. FULL-BLEED IMAGE — AMERICAN MADE                       -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="image-section">
+  <div class="img-bg" style="background-image: url('images/american_worker.png');"></div>
+  <div class="img-overlay overlay-red-left"></div>
+  <div class="img-content">
+    <div class="container">
+      <div style="max-width:520px;" class="fade-up">
+        <div class="section-label" style="color:rgba(255,255,255,.7);">American Made</div>
+        <h2 class="section-title on-dark">Every Layer.<br>Every <span class="accent">Application.</span></h2>
+        <p style="color:rgba(255,255,255,.8);font-size:1rem;line-height:1.75;margin-top:16px;max-width:440px;">
+          From raw polymer sourcing to final topcoat — Theis Tekton is engineered, tested, and applied by American workers. No offshore formulation. No foreign supply chain. Every layer of every application is made in the USA.
+        </p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- BLACKBOX AI -->
-<section class="section bg-black-2" id="blackbox">
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 9. BLACKBOX AI                                             -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="section bg-white" id="blackbox">
   <div class="container">
-    <div style="text-align:center;max-width:680px;margin:0 auto var(--sp-12);" class="reveal">
-      <div class="section-eyebrow" style="justify-content:center;margin-bottom:var(--sp-5);">Sovereign Intelligence</div>
-      <h2 class="section-title" style="margin-bottom:var(--sp-5);">BlackBox<br><span class="text-red">Manufacturing AI</span></h2>
-      <p style="color:var(--white-muted);line-height:1.7;">Proprietary AI platform — built, owned, trained, and controlled entirely by Theis. It operates on Theis data only. No data leaves the building. No third-party cloud. No shared datasets. No hallucinations. A private, sovereign intelligence system designed to run the operations of a world-class American manufacturer.</p>
-    </div>
-    <div class="grid-auto reveal reveal-delay-1">
-      <div class="card">
-        <div style="color:var(--red);margin-bottom:var(--sp-4);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-lg);letter-spacing:0.04em;margin-bottom:var(--sp-3);">Proprietary Data Only</h3>
-        <p style="font-size:var(--text-sm);color:var(--white-muted);line-height:1.7;">Every output grounded in Theis's own data: formulations, batch records, QA/QC history, client specifications, test results, and operational records. Accuracy is structural, not aspirational.</p>
+    <div class="content-split reverse">
+      <!-- Left: Image -->
+      <div class="slide-left">
+        <div class="split-image">
+          <img src="images/blackbox_ai.png" alt="BlackBox AI system interface — Theis Manufacturing" loading="lazy">
+        </div>
       </div>
-      <div class="card">
-        <div style="color:var(--red);margin-bottom:var(--sp-4);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-lg);letter-spacing:0.04em;margin-bottom:var(--sp-3);">Client & Employee Portal</h3>
-        <p style="font-size:var(--text-sm);color:var(--white-muted);line-height:1.7;">Every employee and every client operates through a dedicated login. BlackBox becomes the operational hub connecting people, projects, specifications, communications, and data — all auditable.</p>
-      </div>
-      <div class="card">
-        <div style="color:var(--red);margin-bottom:var(--sp-4);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-lg);letter-spacing:0.04em;margin-bottom:var(--sp-3);">QA/QC Intelligence</h3>
-        <p style="font-size:var(--text-sm);color:var(--white-muted);line-height:1.7;">Batch records, formulation parameters, environmental conditions, test results, nonconformance events, and corrective actions — all captured and searchable, compounding the moat over time.</p>
-      </div>
-      <div class="card">
-        <div style="color:var(--red);margin-bottom:var(--sp-4);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-lg);letter-spacing:0.04em;margin-bottom:var(--sp-3);">Trade-Secret Protection</h3>
-        <p style="font-size:var(--text-sm);color:var(--white-muted);line-height:1.7;">Compartmentalized access controls, need-to-know formulation protocols, digital and physical security, and a full audit trail ensure the most sensitive IP is protected inside a U.S.-controlled system.</p>
-      </div>
-      <div class="card">
-        <div style="color:var(--red);margin-bottom:var(--sp-4);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-lg);letter-spacing:0.04em;margin-bottom:var(--sp-3);">Regulatory Evidence Management</h3>
-        <p style="font-size:var(--text-sm);color:var(--white-muted);line-height:1.7;">Builds and maintains the documentation trail required for federal procurement, third-party certification, ASTM testing, and agency-specific validation — always-ready evidence room.</p>
-      </div>
-      <div class="card">
-        <div style="color:var(--red);margin-bottom:var(--sp-4);"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-lg);letter-spacing:0.04em;margin-bottom:var(--sp-3);">AI Handles the Busy Work</h3>
-        <p style="font-size:var(--text-sm);color:var(--white-muted);line-height:1.7;">Scheduling, documentation, compliance record generation, report drafting, order tracking, and administrative coordination — freeing people to create, solve, build, and lead.</p>
-      </div>
-    </div>
 
-    <!-- BlackBox Across 12 Divisions -->
-    <div style="margin-top:var(--sp-16);" class="reveal">
-      <h3 style="font-family:var(--font-display);font-size:var(--text-2xl);letter-spacing:0.04em;margin-bottom:var(--sp-8);text-align:center;">BlackBox Role Across All <span class="text-red">12 Divisions</span></h3>
-      <div class="grid-auto-sm">
-        <div style="padding:var(--sp-4);background:var(--black-4);border-radius:var(--r-md);border:1px solid var(--border);">
-          <div style="font-size:var(--text-xs);color:var(--red);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:var(--sp-2);">01 — Construction</div>
-          <p style="font-size:var(--text-xs);color:var(--white-muted);">Project specification tracking, emergency response dispatch, QA/QC for production panels, Meryl Norman franchise interface.</p>
-        </div>
-        <div style="padding:var(--sp-4);background:var(--black-4);border-radius:var(--r-md);border:1px solid var(--border);">
-          <div style="font-size:var(--text-xs);color:var(--red);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:var(--sp-2);">02 — Tekton Pole & Pipe</div>
-          <p style="font-size:var(--text-xs);color:var(--white-muted);">Utility pilot documentation, distributor spec compliance, field application QA, wrap-to-pole conversion tracking, utility acceptance file prep.</p>
-        </div>
-        <div style="padding:var(--sp-4);background:var(--black-4);border-radius:var(--r-md);border:1px solid var(--border);">
-          <div style="font-size:var(--text-xs);color:var(--red);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:var(--sp-2);">03 — XTT Containment</div>
-          <p style="font-size:var(--text-xs);color:var(--white-muted);">Hazmat regulatory document management, testing evidence assembly, DOT/PHMSA/FAA submission, supply-chain provenance documentation.</p>
-        </div>
-        <div style="padding:var(--sp-4);background:var(--black-4);border-radius:var(--r-md);border:1px solid var(--border);">
-          <div style="font-size:var(--text-xs);color:var(--red);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:var(--sp-2);">04 — Alviz Defense</div>
-          <p style="font-size:var(--text-xs);color:var(--white-muted);">Government specification management, OTA documentation, classified project access compartmentalization, NIJ certification pathway tracking.</p>
-        </div>
-        <div style="padding:var(--sp-4);background:var(--black-4);border-radius:var(--r-md);border:1px solid var(--border);">
-          <div style="font-size:var(--text-xs);color:var(--red);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:var(--sp-2);">05 — Hyperbaric</div>
-          <p style="font-size:var(--text-xs);color:var(--white-muted);">Pressure vessel batch records, ASME documentation, client health protocol coordination, maintenance scheduling, certification pathway tracking.</p>
-        </div>
-        <div style="padding:var(--sp-4);background:var(--black-4);border-radius:var(--r-md);border:1px solid var(--border);">
-          <div style="font-size:var(--text-xs);color:var(--red);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:var(--sp-2);">06 — Hydrocarbon & Energy</div>
-          <p style="font-size:var(--text-xs);color:var(--white-muted);">Patent portfolio management, distributor training materials, color-stability test records, fuel-system compliance documentation.</p>
-        </div>
-        <div style="padding:var(--sp-4);background:var(--black-4);border-radius:var(--r-md);border:1px solid var(--border);">
-          <div style="font-size:var(--text-xs);color:var(--red);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:var(--sp-2);">07 — Maritime</div>
-          <p style="font-size:var(--text-xs);color:var(--white-muted);">Hull specification tracking, refit project management, vessel program milestone documentation, Navy/Coast Guard supply chain alignment.</p>
-        </div>
-        <div style="padding:var(--sp-4);background:var(--black-4);border-radius:var(--r-md);border:1px solid var(--border);">
-          <div style="font-size:var(--text-xs);color:var(--red);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:var(--sp-2);">08 — Rail & Infrastructure</div>
-          <p style="font-size:var(--text-xs);color:var(--white-muted);">Spill containment project records, fastener restoration tracking, regulatory compliance management, EPA reporting support, storm water test logs.</p>
-        </div>
-        <div style="padding:var(--sp-4);background:var(--black-4);border-radius:var(--r-md);border:1px solid var(--border);">
-          <div style="font-size:var(--text-xs);color:var(--red);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:var(--sp-2);">09 — Absorbtec</div>
-          <p style="font-size:var(--text-xs);color:var(--white-muted);">Filtration media performance records, water quality test logs, environmental compliance evidence, EPA reporting documentation.</p>
-        </div>
-        <div style="padding:var(--sp-4);background:var(--black-4);border-radius:var(--r-md);border:1px solid var(--border);">
-          <div style="font-size:var(--text-xs);color:var(--red);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:var(--sp-2);">10 — Protec Tire</div>
-          <p style="font-size:var(--text-xs);color:var(--white-muted);">Fleet client management, sealant batch records, warranty documentation, field performance data, compatibility tracking by vehicle/tire platform.</p>
-        </div>
-        <div style="padding:var(--sp-4);background:var(--black-4);border-radius:var(--r-md);border:1px solid var(--border);">
-          <div style="font-size:var(--text-xs);color:var(--red);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:var(--sp-2);">11 — Wind Power Energy</div>
-          <p style="font-size:var(--text-xs);color:var(--white-muted);">Prototype documentation, energy output data, coating application records, partnership coordination, patent filing tracking.</p>
-        </div>
-        <div style="padding:var(--sp-4);background:var(--black-4);border-radius:var(--r-md);border:1px solid var(--border);">
-          <div style="font-size:var(--text-xs);color:var(--red);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:var(--sp-2);">12 — Innovation Foundry</div>
-          <p style="font-size:var(--text-xs);color:var(--white-muted);">Inventor intake management, IP assignment tracking, NDA administration, prototype-to-production pathway management, milestone tracking.</p>
+      <!-- Right: Content -->
+      <div class="fade-up">
+        <div class="section-label">BlackBox AI</div>
+        <h2 class="section-title">AI-Powered<br><span class="accent">Division</span> Intelligence</h2>
+        <p style="color:var(--gray-700);line-height:1.75;margin-bottom:36px;font-size:.95rem;">
+          BlackBox AI is Theis Manufacturing's proprietary intelligence layer — an AI system that manages formulation selection, application scheduling, QC monitoring, and division-specific optimization across all 12 Theis verticals. Built, owned, and controlled entirely by Theis. All data stays inside.
+        </p>
+
+        <div>
+          <div class="blackbox-feature">
+            <div class="blackbox-icon">🧠</div>
+            <div>
+              <h4>Formulation Selection</h4>
+              <p>AI matches job specifications to the optimal TT formulation from 1,100+ options — eliminating guesswork and ensuring the right material reaches every application.</p>
+            </div>
+          </div>
+          <div class="blackbox-feature">
+            <div class="blackbox-icon">📋</div>
+            <div>
+              <h4>QC Monitoring</h4>
+              <p>Real-time cure validation and application quality tracking. Every batch record, environmental condition, and nonconformance event is captured, searchable, and auditable.</p>
+            </div>
+          </div>
+          <div class="blackbox-feature">
+            <div class="blackbox-icon">📊</div>
+            <div>
+              <h4>Division Routing</h4>
+              <p>Automatically routes jobs to the correct division with the correct spec sheet, BLT formulation stack, and compliance documentation for that application.</p>
+            </div>
+          </div>
+          <div class="blackbox-feature">
+            <div class="blackbox-icon">🔐</div>
+            <div>
+              <h4>IP Protection</h4>
+              <p>All proprietary formulation data is encrypted and protected through the HP Miller LLC licensing layer. Compartmentalized access controls ensure trade secrets remain inside the US-controlled system.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- THE MOAT -->
-<section style="background:var(--black-3);border-top:1px solid var(--border);padding:var(--sp-16) 0;">
-  <div class="container">
-    <div style="text-align:center;max-width:760px;margin:0 auto var(--sp-12);" class="reveal">
-      <div class="section-eyebrow" style="justify-content:center;margin-bottom:var(--sp-5);">Competitive Positioning</div>
-      <h2 class="section-title" style="margin-bottom:var(--sp-5);">The Moat — A Stack of<br><span class="text-red">Compounding Advantages</span></h2>
-      <p style="color:var(--white-muted);line-height:1.7;">The defensible position is not that there are no competitors — it is that incumbents solve narrow parts of the problem, while Theis is building a cross-application material and manufacturing platform.</p>
-    </div>
-    <div class="grid-auto reveal reveal-delay-1">
-      <div style="padding:var(--sp-5);display:flex;gap:var(--sp-4);align-items:flex-start;">
-        <div style="width:48px;height:48px;background:var(--red-dim);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <div>
-          <h4 style="font-family:var(--font-display);font-size:var(--text-lg);letter-spacing:0.04em;margin-bottom:var(--sp-2);">Trade Secrets</h4>
-          <p style="font-size:var(--text-sm);color:var(--white-muted);">Sophisticated third-party analysis has not identified the differentiators. The secret is structural, not incidental.</p>
-        </div>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 10. CTA — RED BACKGROUND                                   -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="section bg-red">
+  <div class="container" style="text-align:center;">
+    <div class="fade-up">
+      <div class="section-label" style="color:rgba(255,255,255,.65);justify-content:center;">
+        <span>Get Started</span>
       </div>
-      <div style="padding:var(--sp-5);display:flex;gap:var(--sp-4);align-items:flex-start;">
-        <div style="width:48px;height:48px;background:var(--red-dim);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
-        </div>
-        <div>
-          <h4 style="font-family:var(--font-display);font-size:var(--text-lg);letter-spacing:0.04em;margin-bottom:var(--sp-2);">Process Know-How</h4>
-          <p style="font-size:var(--text-sm);color:var(--white-muted);">30+ years of applied problem-solving. Networks, partnerships, and practical know-how built solving problems no one else could solve.</p>
-        </div>
-      </div>
-      <div style="padding:var(--sp-5);display:flex;gap:var(--sp-4);align-items:flex-start;">
-        <div style="width:48px;height:48px;background:var(--red-dim);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
-        </div>
-        <div>
-          <h4 style="font-family:var(--font-display);font-size:var(--text-lg);letter-spacing:0.04em;margin-bottom:var(--sp-2);">First-Mover Position</h4>
-          <p style="font-size:var(--text-sm);color:var(--white-muted);">The opportunity to define standards for Li-battery containment, next-generation utility poles, and domestic armored vehicles before any incumbent organizes a response.</p>
-        </div>
-      </div>
-      <div style="padding:var(--sp-5);display:flex;gap:var(--sp-4);align-items:flex-start;">
-        <div style="width:48px;height:48px;background:var(--red-dim);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-        </div>
-        <div>
-          <h4 style="font-family:var(--font-display);font-size:var(--text-lg);letter-spacing:0.04em;margin-bottom:var(--sp-2);">Standard-Setting Potential</h4>
-          <p style="font-size:var(--text-sm);color:var(--white-muted);">Opportunity to define performance standards in under-codified markets — becoming the benchmark others must match.</p>
-        </div>
+      <h2 style="font-family:var(--font-display);font-size:clamp(2.4rem,5vw,4rem);color:white;letter-spacing:.5px;line-height:1.05;margin-bottom:16px;">
+        Ready to Spec <span style="color:white;opacity:.85;">Theis Tekton</span>?
+      </h2>
+      <p style="color:rgba(255,255,255,.8);font-size:1.05rem;max-width:520px;margin:0 auto 36px;line-height:1.65;">
+        Talk to our engineering team about your application. We'll match you to the right formulation, the right BLT stack, and the right deployment path.
+      </p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="contact.html" class="btn btn-outline-white">Contact Us</a>
+        <a href="divisions.html" class="btn btn-navy">All Divisions</a>
       </div>
     </div>
   </div>
 </section>
 
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-brand-name">THEIS MANUFACTURING</div>
-        <div class="footer-brand-tagline">Mastering the Impossible.</div>
-        <p class="footer-brand-desc">Converting American invention into proven, protected, scalable manufactured products. One platform. Twelve divisions. Infinite American products.</p>
-        <div style="margin-top:var(--sp-6);display:flex;flex-direction:column;gap:var(--sp-2);">
-          <span style="font-size:var(--text-sm);color:var(--white-faint);">📞 714.296.8369</span>
-          <span style="font-size:var(--text-sm);color:var(--white-faint);">✉ JTheis@theisindustries.com</span>
-          <span style="font-size:var(--text-sm);color:var(--white-faint);">🌐 www.theismanufacturing.com</span>
-        </div>
-      </div>
-      <div>
-        <div class="footer-heading">Platform</div>
-        <ul class="footer-links" role="list">
-          <li><a href="platform.html">Theis Tekton</a></li>
-          <li><a href="platform.html#blackbox">BlackBox AI</a></li>
-          <li><a href="platform.html#blt">BLT Architecture</a></li>
-          <li><a href="platform.html#reshoring">Reshoring</a></li>
-          <li><a href="platform.html#environmental">Environmental</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-heading">Divisions</div>
-        <ul class="footer-links" role="list">
-          <li><a href="divisions.html#construction">Theis Construction</a></li>
-          <li><a href="divisions.html#tpp">Tekton Pole & Pipe</a></li>
-          <li><a href="divisions.html#xtt">XTT Containment</a></li>
-          <li><a href="divisions.html#alviz">Alviz Defense</a></li>
-          <li><a href="divisions.html">All 12 Divisions →</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-heading">Company</div>
-        <ul class="footer-links" role="list">
-          <li><a href="about.html">About Theis</a></li>
-          <li><a href="about.html#team">Leadership</a></li>
-          <li><a href="investment.html">Investment</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 11. FOOTER                                                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <!-- Brand -->
+    <div class="footer-brand">
+      <div class="footer-logo">THEIS <span>MFG</span></div>
+      <div class="footer-tagline">Mastering the Impossible.</div>
+      <div class="footer-contact">
+        <p>Converting American invention into proven, protected, scalable manufactured products. One platform. Twelve divisions. Infinite American products.</p>
+        <p style="margin-top:16px;">📞 714.296.8369</p>
+        <p><a href="mailto:JTheis@theisindustries.com">JTheis@theisindustries.com</a></p>
+        <p>www.theismanufacturing.com</p>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p class="footer-copy">© 2026 Theis Manufacturing Corp · HP Miller LLC — IP Licensing · All Rights Reserved</p>
-      <div class="footer-legal"><a href="#">Confidentiality Notice</a><a href="#">Terms</a><a href="#">Privacy</a></div>
+
+    <!-- Platform Links -->
+    <div class="footer-col">
+      <h4>Platform</h4>
+      <ul>
+        <li><a href="platform.html">Theis Tekton</a></li>
+        <li><a href="platform.html#blackbox">BlackBox AI</a></li>
+        <li><a href="platform.html#blt">BLT Architecture</a></li>
+        <li><a href="platform.html#formulations">Formulations</a></li>
+        <li><a href="platform.html#deployment">Deployment Modes</a></li>
+      </ul>
+    </div>
+
+    <!-- Divisions Links -->
+    <div class="footer-col">
+      <h4>Divisions</h4>
+      <ul>
+        <li><a href="divisions.html#construction">Theis Construction</a></li>
+        <li><a href="divisions.html#tpp">Tekton Pole &amp; Pipe</a></li>
+        <li><a href="divisions.html#xtt">XTT Containment</a></li>
+        <li><a href="divisions.html#alviz">Alviz Defense</a></li>
+        <li><a href="divisions.html">All 12 Divisions →</a></li>
+      </ul>
+    </div>
+
+    <!-- Company Links -->
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About Theis</a></li>
+        <li><a href="about.html#team">Leadership</a></li>
+        <li><a href="capabilities.html">Capabilities</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 <strong>Theis Manufacturing Corp</strong> · HP Miller LLC — IP Licensing · All Rights Reserved</p>
+    <div class="footer-flag">
+      <div class="footer-flag-icon"></div>
+      Made in America
     </div>
   </div>
 </footer>
+
 <script src="nav.js"></script>
+<script>
+  // ── HERO BG PARALLAX ─────────────────────────────────────
+  const heroBg = document.querySelector('.hero-bg');
+  if (heroBg) {
+    window.addEventListener('scroll', () => {
+      heroBg.style.transform = `scale(1.05) translateY(${window.scrollY * 0.25}px)`;
+    }, { passive: true });
+  }
+</script>
 </body>
 </html>

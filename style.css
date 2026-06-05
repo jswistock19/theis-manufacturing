@@ -674,8 +674,9 @@ ul { list-style: none; }
 }
 .ticker-inner {
   display: flex; gap: 64px;
-  animation: ticker-scroll 30s linear infinite;
+  animation: ticker-scroll 40s linear infinite;
   width: max-content;
+  /* duplicate items in HTML so the loop is seamless */
 }
 .ticker-item {
   font-size: .75rem; font-weight: 700;

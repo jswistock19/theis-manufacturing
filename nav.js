@@ -78,12 +78,7 @@ const counterObs = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 });
 document.querySelectorAll('[data-target]').forEach(el => counterObs.observe(el));
 
-// ── TICKER DUPLICATE ──────────────────────────────────────
-const ticker = document.querySelector('.ticker-inner');
-if (ticker) {
-  const clone = ticker.cloneNode(true);
-  ticker.parentNode.appendChild(clone);
-}
+// ── TICKER: no JS clone needed — CSS handles seamless loop ──
 
 // ── PARALLAX HERO ─────────────────────────────────────────
 const heroBg = document.querySelector('.hero-bg');
